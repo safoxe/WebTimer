@@ -88,7 +88,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+
             ],
             "scripts": []
           }
@@ -119,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "timer-app"
+    }
+  },
+  "defaultProject": "timer-app",
+  "cli": {
+    "analytics": "f89d26bd-f970-424d-aa5d-82a7c9db0318"
+  }
 }
