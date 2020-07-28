@@ -1,31 +1,9 @@
-<!-- <div class="container" style="background-color: black;">
-  <div class="row">
-    <div class="button-background container shadow-lg p-3 mb-5 bg-white rounded">
-      <div class="row">
-        <div class="column">
-          <button class="btn btn-light" (click)="onTimerReset()">Reset</button>
-        </div>
-        <div class="column">
-          <button class="btn btn-light" (click)="onTimerStop()">Stop</button>
-        </div>
-        <div class="column">
-          <button class="btn btn-light" (click)="onTimerStart()">Start</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="clock shadow-lg p-3 mb-5 bg-white rounded">
-        <h1>{{hours}}</h1>
-      </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<nz-layout>
+<nz-layout> <!-- Used Ant-Desing lib: https://ng.ant.design/docs/introduce/en -->
   <nz-header>
   </nz-header>
   <nz-content>
     <div class="inner-content">
+      <!-- Set of buttons in the one row -->
       <div class="row">
         <div class="column">
           <button class="btn btn-light" *ngIf="IsTimerSet()" (click)="onTimerReset()">Reset</button>
@@ -34,15 +12,18 @@
           <button class="btn btn-light" *ngIf="IsTimerSet()" (click)="onTimerStop()">Stop</button>
         </div>
         <div class="column">
-          <button class="btn btn-light" *ngIf="IsTimerSet()" [disabled]="!IsRunning()" (click)="onTimerStart()">Start</button>
+          <button class="btn btn-light" *ngIf="IsTimerSet()" [disabled]="IsRunning()" (click)="onTimerStart()">Start</button>
         </div>
         <div class="column">
           <button class="btn btn-light" (click)="onTimerSet()">Set Time</button>
         </div>
       </div>
+      <!-- Timer part: minutes : seconds -->
       <div class="row">
         <div class="clock shadow-lg p-3 mb-5 bg-white rounded">
+          <!-- This part will be shown only if time was set -->
         <h1 *ngIf="IsTimerSet(); else setTimerBlock">{{timer.Minutes}} : {{timer.Seconds}}</h1>
+        <!--If time wasn'r set - promote user with functionlity to set time-->
         <ng-template #setTimerBlock>
           <div class="row">
             <div class="column">

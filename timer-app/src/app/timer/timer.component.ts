@@ -12,8 +12,7 @@ export class TimerComponent implements OnInit {
   private isTimerSet: boolean;
   private isRunning: boolean;
 
-  constructor() { }
-
+  //public getters for the UI
   public IsTimerSet(): boolean
   {
       return this.isTimerSet;
@@ -21,6 +20,9 @@ export class TimerComponent implements OnInit {
   public IsRunning(): boolean{
     return this.isRunning;
   }
+
+  constructor() { }
+
 
   ngOnInit(): void {
     this.timer = new Timer();
@@ -39,7 +41,7 @@ export class TimerComponent implements OnInit {
     while(this.timer.Minutes > 0 && !this.timerStoped)
     {
       await this.sleep(1000);
-
+      //after 1s change the value of seconds first and than of minutes
       if(this.timer.Seconds > 0)
       {
         this.timer.Seconds -= 1;
@@ -53,27 +55,31 @@ export class TimerComponent implements OnInit {
 
   sleep(ms)
   {
+    //wait for 1s to pass, but do it async. to prefect blocking of the UI
     return new Promise((resolve) => {setTimeout(resolve, ms);});
   }
 
   onTimerStop()
   {
+    //TO-DO: think of solution with Promise rejection function
       this.timerStoped = true;
       this.isRunning = false;
   }
 
   onTimerReset()
   {
+    //TO-DO: save initial values and back-up to them on this action
     this.timerStoped = false;
     this.isRunning = false;
-    console.log("Timer is reset");
   }
 
+  //when time for the timer is submitted
   onTimeSetSubmit()
   {
     this.isTimerSet = true;
   }
 
+  //when time for the timer is changing
   onTimerSet()
   {
     this.isTimerSet = false;
@@ -81,6 +87,7 @@ export class TimerComponent implements OnInit {
 
 }
 
+//TO-DO: move to another file
 export class Timer{
   public Minutes: number;
   public Seconds: number;
