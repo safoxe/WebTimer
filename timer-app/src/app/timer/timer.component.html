@@ -34,7 +34,7 @@
           <button class="btn btn-light" *ngIf="IsTimerSet()" (click)="onTimerStop()">Stop</button>
         </div>
         <div class="column">
-          <button class="btn btn-light" *ngIf="IsTimerSet()" (click)="onTimerStart()">Start</button>
+          <button class="btn btn-light" *ngIf="IsTimerSet()" [disabled]="!IsRunning()" (click)="onTimerStart()">Start</button>
         </div>
         <div class="column">
           <button class="btn btn-light" (click)="onTimerSet()">Set Time</button>

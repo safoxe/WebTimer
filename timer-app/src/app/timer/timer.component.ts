@@ -10,20 +10,27 @@ export class TimerComponent implements OnInit {
   public timer: Timer;
   private timerStoped: boolean;
   private isTimerSet: boolean;
+  private isRunning: boolean;
+
   constructor() { }
 
   public IsTimerSet(): boolean
   {
       return this.isTimerSet;
   }
+  public IsRunning(): boolean{
+    return this.isRunning;
+  }
 
   ngOnInit(): void {
     this.timer = new Timer();
     this.isTimerSet = false;
+    this.isRunning = false;
   }
 
   async onTimerStart() {
     this.timerStoped = false;
+    this.isRunning = true;
     this.caculateTime();
   }
 
@@ -52,11 +59,13 @@ export class TimerComponent implements OnInit {
   onTimerStop()
   {
       this.timerStoped = true;
+      this.isRunning = false;
   }
 
   onTimerReset()
   {
     this.timerStoped = false;
+    this.isRunning = false;
     console.log("Timer is reset");
   }
 
