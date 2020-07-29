@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Timer } from 'src/app/models/timer-model'
 
 @Component({
   selector: 'app-timer',
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class TimerComponent implements OnInit {
 
   public timer: Timer;
+
   private timerStoped: boolean;
   private isTimerSet: boolean;
   private isRunning: boolean;
@@ -22,7 +24,6 @@ export class TimerComponent implements OnInit {
   }
 
   constructor() { }
-
 
   ngOnInit(): void {
     this.timer = new Timer();
@@ -40,7 +41,8 @@ export class TimerComponent implements OnInit {
   {
     while(this.timer.Minutes > 0 && !this.timerStoped)
     {
-      await this.sleep(1000);
+      let timeToWait = 1000;
+      await this.sleep(timeToWait);
       //after 1s change the value of seconds first and than of minutes
       if(this.timer.Seconds > 0)
       {
@@ -49,19 +51,19 @@ export class TimerComponent implements OnInit {
       else
       {
         this.timer.Minutes -= 1;
+        this.timer.Seconds = 60;
       }
     }
   }
 
-  sleep(ms)
+  sleep(milliseconds)
   {
     //wait for 1s to pass, but do it async. to prefect blocking of the UI
-    return new Promise((resolve) => {setTimeout(resolve, ms);});
+    return new Promise((resolve) => {setTimeout(resolve, milliseconds);});
   }
 
   onTimerStop()
   {
-    //TO-DO: think of solution with Promise rejection function
       this.timerStoped = true;
       this.isRunning = false;
   }
@@ -85,15 +87,4 @@ export class TimerComponent implements OnInit {
     this.isTimerSet = false;
   }
 
-}
-
-//TO-DO: move to another file
-export class Timer{
-  public Minutes: number;
-  public Seconds: number;
-
-  constructor(minutes: number = 0, seconds: number = 0){
-    this.Minutes = minutes;
-    this.Seconds = seconds;
-  }
 }
