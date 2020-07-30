@@ -12,7 +12,7 @@
           <button class="btn btn-light" *ngIf="IsTimerSet()" (click)="onTimerStop()">Stop</button>
         </div>
         <div class="column">
-          <button class="btn btn-light" *ngIf="IsTimerSet()" [disabled]="IsRunning()" (click)="onTimerStart()">Start</button>
+          <button class="btn btn-light" *ngIf="IsTimerSet()" [disabled]="IsTimerRunning()" (click)="onTimerStart()">Start</button>
         </div>
         <div class="column">
           <button class="btn btn-light" (click)="onTimerSet()">Set Time</button>
@@ -27,7 +27,7 @@
         <ng-template #setTimerBlock>
           <div class="row">
             <div class="column">
-                <input type="text" nz-input [(ngModel)]="timer.Minutes"/>
+                <input type="text" max="60" nz-input [(ngModel)]="timer.Minutes"/>
             </div>
             <div class="column">
               <h1> : </h1>
