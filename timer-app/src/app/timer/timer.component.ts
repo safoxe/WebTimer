@@ -9,18 +9,19 @@ import { Timer } from 'src/app/models/timer-model'
 export class TimerComponent implements OnInit {
 
   public timer: Timer;
+  public timeInitialState: Timer;
 
   private timerStoped: boolean;
   private isTimerSet: boolean;
-  private isRunning: boolean;
+  private isTimerRunning: boolean;
 
   //public getters for the UI
   public IsTimerSet(): boolean
   {
       return this.isTimerSet;
   }
-  public IsRunning(): boolean{
-    return this.isRunning;
+  public IsTimerRunning(): boolean{
+    return this.isTimerRunning;
   }
 
   constructor() { }
@@ -28,12 +29,12 @@ export class TimerComponent implements OnInit {
   ngOnInit(): void {
     this.timer = new Timer();
     this.isTimerSet = false;
-    this.isRunning = false;
+    this.isTimerRunning = false;
   }
 
-  async onTimerStart() {
+  onTimerStart() {
     this.timerStoped = false;
-    this.isRunning = true;
+    this.isTimerRunning = true;
     this.caculateTime();
   }
 
@@ -42,7 +43,7 @@ export class TimerComponent implements OnInit {
     while(this.timer.Minutes > 0 && !this.timerStoped)
     {
       let timeToWait = 1000;
-      await this.sleep(timeToWait);
+      await this.waitForOneSec(timeToWait);
       //after 1s change the value of seconds first and than of minutes
       if(this.timer.Seconds > 0)
       {
@@ -56,7 +57,7 @@ export class TimerComponent implements OnInit {
     }
   }
 
-  sleep(milliseconds)
+  waitForOneSec(milliseconds)
   {
     //wait for 1s to pass, but do it async. to prefect blocking of the UI
     return new Promise((resolve) => {setTimeout(resolve, milliseconds);});
@@ -65,20 +66,23 @@ export class TimerComponent implements OnInit {
   onTimerStop()
   {
       this.timerStoped = true;
-      this.isRunning = false;
+      this.isTimerRunning = false;
   }
 
   onTimerReset()
   {
     //TO-DO: save initial values and back-up to them on this action
-    this.timerStoped = false;
-    this.isRunning = false;
+    this.timerStoped = true;
+    this.isTimerRunning = false;
+    this.timer.Minutes = this.timeInitialState.Minutes;
+    this.timer.Seconds = this.timeInitialState.Seconds;
   }
 
   //when time for the timer is submitted
   onTimeSetSubmit()
   {
     this.isTimerSet = true;
+    this.timeInitialState = new Timer(this.timer.Minutes, this.timer.Seconds);
   }
 
   //when time for the timer is changing
